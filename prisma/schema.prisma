@@ -15,7 +15,3 @@ model Tweet {
   id      String @id @default(uuid())
   message String
 }
-
-model User {
-        id              String @id @default(uuid())     
-}
