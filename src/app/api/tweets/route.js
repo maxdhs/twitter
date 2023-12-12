@@ -1,7 +1,10 @@
-import { tweets } from "@/lib/tweets.js";
+import { prisma } from "@/lib/prisma.js";
 import { NextResponse } from "next/server.js";
 
-export function GET() {
+export async function GET() {
+  // how can i use prisma to get the real tweets from the db?
+  const tweets = await prisma.tweet.findMany();
+
   return NextResponse.json({ success: true, tweets });
 }
 
@@ -17,10 +20,8 @@ export async function POST(request, response) {
         error: "You must provide a message to create a tweet.",
       });
     }
-    const tweet = { id: tweets.length + 1, message };
-
-    tweets.push(tweet);
-    return NextResponse.json({ success: true, tweets });
+    const tweet = await prisma.tweet.create({ data: { message } });
+    return NextResponse.json({ success: true, tweet });
   } catch (error) {
     return NextResponse.json({ success: false, error: error.message });
   }
