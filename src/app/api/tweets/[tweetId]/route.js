@@ -21,13 +21,9 @@ export async function GET(request, response) {
   }
 }
 
-// PUT /api/tweets/osdi2394829348sofdij to change the tweet to update the message
-
 export async function PUT(request, response) {
   try {
     const { tweetId } = response.params;
-
-    // how do we extract that message from the body of the request?
     const { message } = await request.json();
 
     const tweet = await prisma.tweet.findFirst({
@@ -41,7 +37,6 @@ export async function PUT(request, response) {
       });
     }
 
-    // how do we ask prisma to edit the tweett
     const updatedTweet = await prisma.tweet.update({
       where: {
         id: tweetId,

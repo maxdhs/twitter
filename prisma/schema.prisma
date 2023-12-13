@@ -14,4 +14,14 @@ datasource db {
 model Tweet {
   id      String @id @default(uuid())
   message String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String
+}
+
+model User {
+  id       String  @id @default(uuid())
+  username String  @unique
+  isAdmin  Boolean @default(false)
+  password String
+  tweets   Tweet[]
 }
